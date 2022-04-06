@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon src/app.js -e js,hbs"
+    "start": "nodemon app.js -e js,hbs"
   },
   "keywords": [],
   "author": "Aditya",
@@ -16,8 +16,10 @@
   "dependencies": {
     "body-parser": "^1.20.0",
     "dotenv": "^16.0.0",
+    "ejs": "^3.1.6",
     "express": "^4.17.3",
     "express-handlebars": "^6.0.3",
+    "hbs": "^4.2.0",
     "mysql": "^2.18.1",
     "nodemon": "^2.0.15"
   }
