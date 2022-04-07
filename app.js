@@ -8,13 +8,13 @@ const exphbs=require('express-handlebars');
 app.use(bodyParse.urlencoded({extended: false}));
 app.use(bodyParse.json());
 app.use(express.static('public'));
-app.engine('hbs',exphbs.engine({
-    extname:'.hbs',
+app.engine('html',exphbs.engine({
+    extname:'.html',
     defaultLayout: false
 
 
 }));
-app.set('view engine','hbs');
+app.set('view engine','html');
 app.get('',(req,res)=>{
     res.render('index');
 
