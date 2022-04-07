@@ -19,6 +19,23 @@ app.get('',(req,res)=>{
     res.render('index');
 
 });
+app.get('/about',(req,res)=>{
+    res.render('about');
+
+});
+app.get('/signup',(req,res)=>{
+    res.render('signup');
+
+});
+app.get('/contact',(req,res)=>{
+    res.render('contact');
+
+});
+
+
+
+
+
 
 
 
