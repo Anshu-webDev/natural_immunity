@@ -30,6 +30,11 @@ body {
 	height: 100%;
 }
 
+h2 {
+	color: #aa1c00;
+	text-align: center;
+}
+
 label {
 	color: #fff;
 	font-size: 2.3em;
