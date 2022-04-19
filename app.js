@@ -121,11 +121,19 @@ app.post("/product_add", (req, res) => {
                 connection.query("INSERT INTO cart(product_name,product_price,product_image,qty,total_price,product_code) VALUES (?,?,?,?,?,?)",
                     [pname, pprice, pimage, pqty, total_price, pcode], (error, row) => {
                         if (!error) {
-                            res.send(`Item added to your cart!`);
+                            res.send(`<div class="alert alert-success alert-dismissible mt-2">
+                                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                        <strong>Item added to your cart!</strong>
+                                    </div>`
+                            );
                         }
                     })
             } else {
-                res.send(`Item already added to your cart!`);
+                res.send(`<div class="alert alert-danger alert-dismissible mt-2">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            <strong>Item already added to your cart!</strong>
+                        </div>`
+                );
             }
         }
 
@@ -140,6 +148,39 @@ app.get("/cart_number", (req, res) => {
     })
 })
 
+app.get("/cart", (req, res) => {
+
+    if (req.session.data) {
+        connection.query("SELECT * FROM cart", (err, row) => {
+            if (!err) {
+                res.render("cart", { data: req.session.data, in_cart: row });
+            }
+        })
+    } else {
+        res.redirect("/signup")
+    }
+})
+
+// set total price of product in the cart table 
+app.post("/change_qty", (req, res) => {
+    const { qty, pid, pprice } = req.body;
+    let tprice = qty * pprice;
+
+    connection.query('UPDATE cart SET qty=?, total_price=? WHERE id=?', [qty, tprice, pid], (err, result) => {
+        if (!err) {
+            res.send("Success full");
+        } else {
+            res.send("Failed");
+        }
+    });
+})
+
+
+// Remove single items from cart
+app.get("/remove_from_cart/:pid", (req, res) => {
+    const product_id = req.params.pid;
+    res.send(product_id);
+})
 
 app.get("/logout", (req, res) => {
     req.session.destroy((err) => {
