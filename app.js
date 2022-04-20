@@ -174,6 +174,19 @@ app.post("/change_qty", (req, res) => {
         }
     });
 })
+app.post("/add_order", (req, res) => {
+    const { name, adress, phno,pmode,p_name,t_price} = req.body;
+    id=req.session.data;
+    console.log(name)
+
+    connection.query('INSERT INTO  orders (order_id,user_id,user_name,prducts_name,phno,adress,total_price,p_mode) VALUES(?,?,?,?,?,?,?,?)', [id,id,name,p_name,phno,adress,t_price,pmode], (err, result) => {
+        if (!err) {
+            res.redirect("/clearll/");
+        } else {
+            res.send("Failed");
+        }
+    });
+})
 
 app.get("/checkout/", (req, res) => {
     if (req.session.data) {
