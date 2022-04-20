@@ -82,7 +82,7 @@
                                     <th>Quantity</th>
                                     <th>Total Price</th>
                                     <th>
-                                        <a href="action.php?clear=all" class="badge-danger badge p-1"
+                                        <a href="/clear_all/" class="badge-danger badge p-1"
                                             onclick="return confirm('Are you sure want to clear your cart?');"><i
                                                 class="fas fa-trash"></i>&nbsp;&nbsp;Clear Cart</a>
                                     </th>
@@ -90,57 +90,56 @@
                             </thead>
                             <tbody>
 
+                                <%var grand_total=0 %>
+                                    <% in_cart.forEach(function(item){ %>
 
-                                <% in_cart.forEach(function(item){ %>
 
-
-                                    <tr>
-                                        <td>
-                                            <%= item.product_id %>
-                                        </td>
-                                        <input type="hidden" class="pid" value="<%= item.product_id %>">
-                                        <td><img src="<%= item.product_image %>" width="50">
-                                        </td>
-                                        <td>
-                                            <%= item.product_name %>
-                                        </td>
-                                        <td>
-                                            <i class="fas fa-rupee-sign"></i>&nbsp;&nbsp;
-                                            <%= item.product_price %>
-                                        </td>
-                                        <input type="hidden" class="pprice" value="<%= item.product_price %>">
-                                        <td>
-                                            <input type="number" class="form-control itemQty" value="<%= item.qty %>"
-                                                style="width:75px;">
-                                        </td>
-                                        <td><i class="fas fa-rupee-sign"></i>&nbsp;&nbsp;
-                                            <%= item.total_price %>
-                                        </td>
-                                        <td>
-                                            <a href="/remove_from_cart?remove=<%= item.product_id %>"
-                                                class="text-danger lead"
-                                                onclick="return confirm('Are you sure want to remove this item?');"><i
-                                                    class="fas fa-trash-alt"></i></a>
-                                        </td>
-                                    </tr>
-                                    <% var grand_total+=item.total_price; %>
-                                        <% }) %>
-                                            <tr>
-                                                <td colspan="3">
-                                                    <a href="services.php" class="btn btn-success"><i
-                                                            class="fas fa-cart-plus"></i>&nbsp;&nbsp;Continue
-                                                        Shopping</a>
-                                                </td>
-                                                <td colspan="2"><b>Grand Total</b></td>
-                                                <td><b><i class="fas fa-rupee-sign"></i>&nbsp;&nbsp;
-                                                        <%- grand_total %>
-                                                    </b></td>
-                                                <td>
-                                                    <a href="checkout.php"
-                                                        class="btn btn-info <%- (grand_total > 1) ? '' : 'disabled'; %>"><i
-                                                            class="far fa-credit-card"></i>&nbsp;&nbsp;Checkout</a>
-                                                </td>
-                                            </tr>
+                                        <tr>
+                                            <td>
+                                                <%= item.id %>
+                                            </td>
+                                            <input type="hidden" class="pid" value="<%= item.id %>">
+                                            <td><img src="<%= item.product_image %>" width="50">
+                                            </td>
+                                            <td>
+                                                <%= item.product_name %>
+                                            </td>
+                                            <td>
+                                                <i class="fas fa-rupee-sign"></i>&nbsp;&nbsp;
+                                                <%= item.product_price %>
+                                            </td>
+                                            <input type="hidden" class="pprice" value="<%= item.product_price %>">
+                                            <td>
+                                                <input type="number" class="form-control itemQty"
+                                                    value="<%= item.qty %>" style="width:75px;">
+                                            </td>
+                                            <td><i class="fas fa-rupee-sign"></i>&nbsp;&nbsp;
+                                                <%= item.total_price %>
+                                            </td>
+                                            <td>
+                                                <a href="/remove_from_cart/<%= item.id %>" class="text-danger lead"
+                                                    onclick="return confirm('Are you sure want to remove this item?');"><i
+                                                        class="fas fa-trash-alt"></i></a>
+                                            </td>
+                                        </tr>
+                                        <% grand_total=Number(grand_total) + Number(item.total_price); %>
+                                            <% }) %>
+                                                <tr>
+                                                    <td colspan="3">
+                                                        <a href="/home" class="btn btn-success"><i
+                                                                class="fas fa-cart-plus"></i>&nbsp;&nbsp;Continue
+                                                            Shopping</a>
+                                                    </td>
+                                                    <td colspan="2"><b>Grand Total</b></td>
+                                                    <td><b><i class="fas fa-rupee-sign"></i>&nbsp;&nbsp;
+                                                            <%- grand_total %>
+                                                        </b></td>
+                                                    <td>
+                                                        <a href="/checkout/"
+                                                            class="btn btn-info"><i
+                                                                class="far fa-credit-card"></i>&nbsp;&nbsp;Checkout</a>
+                                                    </td>
+                                                </tr>
                             </tbody>
                         </table>
                     </div>

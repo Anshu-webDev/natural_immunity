@@ -175,11 +175,40 @@ app.post("/change_qty", (req, res) => {
     });
 })
 
-
+app.get("/checkout/", (req, res) => {
+    if (req.session.data) {
+        connection.query("SELECT * FROM cart", (err, row) => {
+            if (!err) {
+                res.render("checkout", { data: req.session.data, all_product: row });
+            }
+        })
+    } else {
+        res.redirect("/cart")
+    }
+    
+})
 // Remove single items from cart
 app.get("/remove_from_cart/:pid", (req, res) => {
     const product_id = req.params.pid;
-    res.send(product_id);
+    connection.query('DELETE FROM cart WHERE id=?',[product_id],(err,result)=>{
+        if (!err) {
+            res.redirect("/cart");
+
+        } else {
+            res.send("Failed");
+        } 
+    })
+})
+
+app.get("/clear_all/", (req, res) => {
+    connection.query('DELETE FROM cart' ,(err,result)=>{
+        if (!err) {
+            res.redirect("/cart");
+
+        } else {
+            res.send("Failed");
+        } 
+    })
 })
 
 app.get("/logout", (req, res) => {

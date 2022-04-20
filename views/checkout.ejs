@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="author" content="Sahil Kumar">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Cart</title>
+        <link rel='stylesheet'
+            href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css' />
+        <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css' />
+
+        <!-- Google Fonts -->
+        <link
+            href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,700,700i&display=swap"
+            rel="stylesheet">
+
+        <!-- Vendor CSS Files -->
+        <link href="vendor/animate.css/animate.min.css" rel="stylesheet">
+        <link href="vendor/aos/aos.css" rel="stylesheet">
+        <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+        <link href="vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+        <link href="vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+        <link href="vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    </head>
+
+
+<body>
+    <header id="header" class="fixed-top d-flex align-items-center header-transparent">
+      <div class="container d-flex justify-content-between align-items-center">
+
+        <div class="logo">
+          <h1 class="text-light"><a href="/"><span>NATURAL IMMUNITY</span></a></h1>
+          <!-- Uncomment below if you prefer to use an image logo -->
+          <!-- <a href="/"><img src="img/logo.png" alt="" class="img-fluid"></a>-->
+        </div>
+
+        <nav id="navbar" class="navbar">
+          <ul>
+            <li><a class="active " href="/">Home</a></li>
+            <li><a href="/about">INFO</a></li>
+            <li><a href="/signup">Products</a></li>
+            <li><a href="/contact">Contact Us</a></li>
+          </ul>
+          <i class="bi bi-list mobile-nav-toggle"></i>
+        </nav><!-- .navbar -->
+
+      </div>
+    </header><!-- End Header -->
+
+
+
+      <section>
+
+      <div class="container" style="position:absolute; bottom:-100px; left:100px;margin:5px; gap:50px;">
+
+    <div class="row justify-content-center">
+      <div class="col-lg-6 px-4 pb-4" id="order">
+        <h4 class="text-center text-info p-2">Complete your order!</h4>
+        <div class="jumbotron p-3 mb-2 text-center">
+          <h6 class="lead"><b>Product(s) : </b><?= $allItems; ?></h6>
+          <h6 class="lead"><b>Delivery Charge : </b>Free</h6>
+          <h5><b>Total Amount Payable : </b><?= number_format($grand_total,2) ?>/-</h5>
+        </div>
+        <form action="" method="post" id="placeOrder">
+          <input type="hidden" name="products" value="<?= $allItems; ?>">
+          <input type="hidden" name="grand_total" value="<?= $grand_total; ?>">
+          <div class="form-group">
+            <input type="text" name="name" class="form-control" placeholder="Enter Name" required>
+          </div>
+          <div class="form-group">
+            <input type="email" name="email" class="form-control" placeholder="Enter E-Mail" required>
+          </div>
+          <div class="form-group">
+            <input type="tel" name="phone" class="form-control" placeholder="Enter Phone" required>
+          </div>
+          <div class="form-group">
+            <textarea name="address" class="form-control" rows="3" cols="10" placeholder="Enter Delivery Address Here..."></textarea>
+          </div>
+          <h6 class="text-center lead">Select Payment Mode</h6>
+          <div class="form-group">
+            <select name="pmode" class="form-control">
+              <option value="" selected disabled>-Select Payment Mode-</option>
+              <option value="cod">Cash On Delivery</option>
+              <option value="netbanking">Net Banking</option>
+              <option value="cards">Debit/Credit Card</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <input type="submit" name="submit" value="Place Order" class="btn btn-danger btn-block">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+<section>
+
+<div class="footer-top">
+<div class="container" style="position:absolute; bottom:-350px; color:blue; ">
+
+    <div class="row">
+
+
+      <div class="col-lg-3 col-md-6 footer-contact">
+        <h4>Contact Us</h4>
+        <p>
+          A108 Adam Street <br>
+          New York, NY 535022<br>
+          United States <br><br>
+          <strong>Phone:</strong> +1 5589 55488 55<br>
+          <strong>Email:</strong> info@example.com<br>
+        </p>
+
+      </div>
+
+      <div class="col-lg-3 col-md-6 footer-info">
+        <h3>About NATURAL IMMUNITY</h3>
+        <p>NATURAL IMMUNITY IS WEBSITE WITCH TELLS HOW WE CAN INCREASE OUR IMMUNITY WITH NATURAL THINGS
+        </p>
+        <div class="social-links mt-3">
+          <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+          <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+          <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+          <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="container" style="position:absolute; bottom:-450px; left:100px;margin:5px; gap:50px; color:blue;">
+
+  <div class="copyright">
+    &copy; Copyright <strong><span>NATURAL IMMUNITY</span></strong>. All Rights Reserved
+  </div>
+  <div class="credits">
+    <!-- All the links in the footer should remain intact. -->
+    <!-- You can delete the links only if you purchased the pro version. -->
+    <!-- Licensing information: https://bootstrapmade.com/license/ -->
+    <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/free-bootstrap-template-corporate-moderna/ -->
+    Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+  </div>
+</div>
+
+
+
+</section>
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js'></script>
+
+  <script type="text/javascript">
+  $(document).ready(function() {
+
+    // Sending Form data to the server
+    $("#placeOrder").submit(function(e) {
+      e.preventDefault();
+      $.ajax({
+        url: 'action.php',
+        method: 'post',
+        data: $('form').serialize() + "&action=order",
+        success: function(response) {
+          $("#order").html(response);
+        }
+      });
+    });
+
+    // Load total no.of items added in the cart and display in the navbar
+    load_cart_item_number();
+
+    function load_cart_item_number() {
+      $.ajax({
+        url: 'action.php',
+        method: 'get',
+        data: {
+          cartItem: "cart_item"
+        },
+        success: function(response) {
+          $("#cart-item").html(response);
+        }
+      });
+    }
+  });
+  </script>
+</body>
+
+</html>
