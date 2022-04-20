@@ -175,20 +175,29 @@ app.post("/change_qty", (req, res) => {
     });
 })
 app.post("/add_order", (req, res) => {
-    const { name, adress, phno,pmode,p_name,t_price} = req.body;
-    id=req.session.data;
-    console.log(name)
+    const { name, phno, adress, pmode, p_name, t_price } = req.body;
+    let user_id = req.session.data.user_id;
 
-    connection.query('INSERT INTO  orders (order_id,user_id,user_name,prducts_name,phno,adress,total_price,p_mode) VALUES(?,?,?,?,?,?,?,?)', [id,id,name,p_name,phno,adress,t_price,pmode], (err, result) => {
+    connection.query('INSERT INTO orders (user_id,user_name,prducts_name,phno,adress,total_price,p_mode) VALUES(?,?,?,?,?,?,?)', [user_id, name, p_name, phno, adress, t_price, pmode], (err, result) => {
         if (!err) {
-            res.redirect("/clearll/");
+            connection.query('DELETE FROM cart', (err, result) => {
+                if (!err) {
+                    res.send(`<div class="alert alert-success alert-dismissible mt-2">
+                                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                        <strong>Your Order has been placed!</strong>
+                                    </div>`
+                    );
+                } else {
+                    res.send("Failed");
+                }
+            })
         } else {
             res.send("Failed");
         }
     });
 })
 
-app.get("/checkout/", (req, res) => {
+app.get("/checkout", (req, res) => {
     if (req.session.data) {
         connection.query("SELECT * FROM cart", (err, row) => {
             if (!err) {
@@ -198,29 +207,28 @@ app.get("/checkout/", (req, res) => {
     } else {
         res.redirect("/cart")
     }
-    
+
 })
 // Remove single items from cart
 app.get("/remove_from_cart/:pid", (req, res) => {
     const product_id = req.params.pid;
-    connection.query('DELETE FROM cart WHERE id=?',[product_id],(err,result)=>{
+    connection.query('DELETE FROM cart WHERE id=?', [product_id], (err, result) => {
         if (!err) {
             res.redirect("/cart");
 
         } else {
             res.send("Failed");
-        } 
+        }
     })
 })
 
 app.get("/clear_all/", (req, res) => {
-    connection.query('DELETE FROM cart' ,(err,result)=>{
+    connection.query('DELETE FROM cart', (err, result) => {
         if (!err) {
             res.redirect("/cart");
-
         } else {
             res.send("Failed");
-        } 
+        }
     })
 })
 
