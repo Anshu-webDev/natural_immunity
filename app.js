@@ -47,7 +47,12 @@ app.get('/about', (req, res) => {
 });
 
 app.get('/contact', (req, res) => {
-    res.render('contact');
+    if (req.session.data) {
+        res.render('contact');
+    } else {
+        res.redirect("/signup")
+    }
+
 
 });
 
@@ -138,6 +143,29 @@ app.post("/product_add", (req, res) => {
         }
 
     })
+})
+
+app.post("/contact", (req, res) => {
+    if (req.session.data) {
+        const { name, subject, message } = req.body;
+        console.log(name);
+        let user_id = req.session.data.user_id;
+        connection.query('INSERT INTO contact (user_id,name,subject,message) VALUES(?,?,?,?)', [user_id, name, subject, message], (err, result) => {
+            if (!err) {
+                res.send(`<div class="alert alert-success alert-dismissible mt-2">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            <strong>query has been forwarded!</strong>
+                        </div>`
+                );
+            }
+            else {
+                res.send("Failed");
+            }
+        })
+    } else {
+        res.redirect("/signup");
+    }
+
 })
 
 app.get("/cart_number", (req, res) => {
