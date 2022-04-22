@@ -8,13 +8,17 @@ const exphbs = require('express-handlebars');
 app.use(bodyParse.urlencoded({ extended: false }));
 app.use(bodyParse.json());
 app.use(express.static('public'));
-var session = require('express-session')
+var session = require('express-session');
+const flash = require('connect-flash');
 
 app.use(session({
     secret: 'keyboard cat',
     resave: false,
     saveUninitialized: false
 }))
+
+// Use Connect Flash
+app.use(flash());
 
 app.engine('html', exphbs.engine({
     extname: '.html',
@@ -57,7 +61,7 @@ app.get('/contact', (req, res) => {
 });
 
 app.get('/signup', (req, res) => {
-    res.render('signup', { msg: msg });
+    res.render('signup', { info: req.flash('info') });
 
 });
 
@@ -73,6 +77,7 @@ app.post('/register', (req, res) => {
                     [name, email, pswd],
                     (err, result) => {
                         if (err) return reject(err);
+                        req.flash('info', 'Register Successfully. Now you can login')
                         res.redirect('/signup');
                     });
             } else if (err) return reject(err);
@@ -92,9 +97,11 @@ app.post('/login', (req, res) => {
                 msg = "";
                 sess = req.session;
                 sess.data = row[0];
+                req.flash('info', 'login Successfully')
                 res.redirect("/home");
             } else {
                 msg = "incorrect credentials";
+                req.flash('info', 'incorrect credentials')
                 res.redirect("/signup")
             }
         }
