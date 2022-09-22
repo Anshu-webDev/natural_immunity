@@ -114,7 +114,9 @@
             </div>
 
             <div class="col-lg-6">
-              <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+              <div id="error_message"></div>
+              <form action="forms/contact.php" method="post" role="form" class="php-email-form"
+                onsubmit="return validate();">
                 <div class="row">
                   <div class="col-md-6 form-group">
                     <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
@@ -193,7 +195,7 @@
           <!-- You can delete the links only if you purchased the pro version. -->
           <!-- Licensing information: https://bootstrapmade.com/license/ -->
           <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/free-bootstrap-template-corporate-moderna/ -->
-          Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+          Designed by <a href="https://bootstrapmade.com/">TCET</a>
         </div>
       </div>
     </footer><!-- End Footer -->
@@ -228,6 +230,15 @@
           var name = document.getElementById("name").value;
           var subject = document.getElementById("subject").value;
           var message = document.getElementById("message").value;
+
+          function validate() {
+            if (name.length < 5) {
+              text = "Please Enter valid Name";
+              error_message.innerHTML = text;
+              return false;
+            }
+          }
+
 
           $.ajax({
             url: '/contact',

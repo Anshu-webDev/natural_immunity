@@ -40,7 +40,7 @@ connection.getConnection((err, result) => {
     console.log("connected as ID" + result.threadId);
 })
 
-var msg = "";
+
 app.get('', (req, res) => {
     res.render('index', { name: "Anshu" });
 
@@ -94,13 +94,11 @@ app.post('/login', (req, res) => {
     connection.query("Select * from users where email=? AND password=?", [email, pswd], (err, row) => {
         if (!err) {
             if (row.length > 0) {
-                msg = "";
                 sess = req.session;
                 sess.data = row[0];
                 req.flash('info', 'login Successfully')
                 res.redirect("/home");
             } else {
-                msg = "incorrect credentials";
                 req.flash('info', 'incorrect credentials')
                 res.redirect("/signup")
             }
@@ -115,6 +113,18 @@ app.get("/home", (req, res) => {
         connection.query("select * from product", (err, row) => {
             if (!err) {
                 res.render("services", { data: req.session.data, products: row });
+            }
+        })
+    } else {
+        res.redirect("/signup")
+    }
+})
+
+app.get("/order_history", (req, res)=>{
+    if (req.session.data) {
+        connection.query("SELECT * FROM orders WHERE user_id=?", [req.session.data.user_id], (err, row) => {
+            if (!err) {
+                res.render("orderHistory", { data: req.session.data, ord: row });
             }
         })
     } else {
@@ -176,7 +186,7 @@ app.post("/contact", (req, res) => {
 })
 
 app.get("/cart_number", (req, res) => {
-    connection.query("SELECT * FROM cart", (err, row) => {
+    connection.query("SELECT * FROM cart WHERE u_id=?", [req.session.data.user_id], (err, row) => {
         if (!err) {
             res.send((row.length).toString());
         }
@@ -186,7 +196,7 @@ app.get("/cart_number", (req, res) => {
 app.get("/cart", (req, res) => {
 
     if (req.session.data) {
-        connection.query("SELECT * FROM cart", (err, row) => {
+        connection.query("SELECT * FROM cart WHERE u_id=?", [req.session.data.user_id], (err, row) => {
             if (!err) {
                 res.render("cart", { data: req.session.data, in_cart: row });
             }
